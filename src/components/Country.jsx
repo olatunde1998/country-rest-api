@@ -2,31 +2,22 @@
 import { Grid, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-
-
 
 
 const Country = () => {
   const {id} = useParams()
   const baseURL = "https://restcountries.com/v3.1/all";
-
-
   const [posts, setPosts] = useState();
+
   // const {data} = await APIRequest.get(`/users/${id}`)
-
-
   useEffect(() => {
     axios.get(baseURL).then((response) => {
         const data = response.data
-
         setPosts(data.filter((data) => data.name.common === id ))
-
     //   setPosts(response.data);
-
     });
-  }, []);
+  }, [id]);
   console.log("posts==========", posts)
   return (
     <div>

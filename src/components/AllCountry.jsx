@@ -1,169 +1,172 @@
-// import Box from "@mui/material/Box";
-// import Card from "@mui/material/Card";
-// import CardActions from "@mui/material/CardActions";
-// import CardContent from "@mui/material/CardContent";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
-// import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import axios from "axios";
-
-// const bull = (
-//   <Box
-//     component="span"
-//     sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-//   >
-//     •
-//   </Box>
-// );
-// const baseURL = "https://jsonplaceholder.typicode.com/posts";
-
-// export default function AllCountry() {
-//   const baseURL = "https://restcountries.com/v3.1/all";
-
-//   const [posts, setPosts] = useState();
-
-//   useEffect(() => {
-//     axios.get(baseURL).then((response) => {
-//       setPosts(response.data);
-//     });
-//   }, []);
-//   // console.log("=======posts======", posts);
-//   return (
-//     <div>
-//       <div>This is my cards</div>
-//       <div>
-//         {posts && posts.map((post,id)=>(
-//             <Link key={post.name.common} to={`/allcountry/${post.name.common}`}>
-//             <Card sx={{ minWidth: 275 }}>
-//               <CardContent>
-//                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-//                 {post.title}
-//                 </Typography>
-//                 <Typography variant="h5" component="div">
-//                   be{bull}nev{bull}o{bull}lent
-//                 </Typography>
-//                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-//                   adjective
-//                 </Typography>
-//                 <Typography variant="body2">
-//                  {post.body}
-//                   <br />
-//                   {'"a benevolent smile"'}
-//                 </Typography>
-//               </CardContent>
-//               <CardActions>
-//                 <Button size="small">Learn More</Button>
-//               </CardActions>
-//             </Card>
-//             </Link>
-
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, Grid } from "@mui/material";
+import { Box, CardActionArea, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function AllCountry() {
   const baseURL = "https://restcountries.com/v3.1/all";
 
   const [posts, setPosts] = useState();
+  const [search, setSearch] = useState("");
+  const [regions, setRegions] = useState("");
+
+  const regionData = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
   useEffect(() => {
     axios.get(baseURL).then((response) => {
-      setPosts(response.data);
+      const countryData = response.data;
+      setPosts(countryData);
     });
   }, []);
+  // console.log("========", posts)
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleRegions = (e) => {
+    setRegions(e.target.value);
+  };
+  console.log(regions);
+
   return (
-    <div>
-      <div className="border-2 border-red-800">This is a cards</div>
-      <Grid container  className="border-2 border-blue-700 mx-[auto] justify-center xl:max-w-[1440px] mx-auto">
-        {posts &&
-          posts.map((post, id) => (
-            <Link key={post.name.common} to={`/allcountry/${post.name.common}`}>
-              <Grid item sx={{margin:"10px"}}>
-              <Card sx={{ maxWidth: 300, border:"2px solid green"}}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={post.flags.png}
-                    alt="green iguana"
-                    sx={{border:"2px solid red",maxHeight:"160px"}}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {/* country name */}
-                      {post.name.common}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {/* population, region, capital */}
-                      Population:{post.population}<br/>
-                      Region:{post.region}<br/>
-                      Capital:{post.capital}
-                    </Typography>
-                  
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-              </Grid>
-            </Link>
-          ))}
-      </Grid>
-    </div>
+    <Box
+      sx={{
+        backgroundColor: "hsl(207, 26%, 17%)",
+        height: "3000px",
+        position: "fixed",
+        width: "100%",
+      }}
+    >
+      <div className="text-[#FFFFFF] text-3xl">Countries</div>
+      <Box className="sm:flex justify-between mt-[70px] xl:max-w-[1440px] mx-auto flex flex-wrap justify-between">
+        <Typography
+          component="div"
+          sx={{
+            marginLeft: "10px",
+          }}
+          className="w-[250px] h-full lg:w-[400px] h-[70px]"
+        >
+          <input
+            type="text"
+            onChange={handleSearch}
+            placeholder="Search your country"
+            className="w-full h-full"
+          />
+        </Typography>
+        <Box
+          sx={{
+            marginLeft: "10px",
+          }}
+          className="border-2 border-gray-500 w-[150px] mt-[30px] lg:w-[200px] mr-[10px] h-[70px] mt-[0px]"
+        >
+          <FormControl sx={{ width: "90%", m: 1 }}>
+            <Select
+              value={regions}
+              onChange={handleRegions}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem
+                value=""
+                style={{ backgroundColor: "hsl(209, 23%, 22%)" }}
+              >
+                <em style={{ color: "white" }}>Filter by region</em>
+              </MenuItem>
+              {regionData.map((item, id) => (
+                <MenuItem
+                  value={item}
+                  key={id}
+                  style={{
+                    backgroundColor: "hsl(209, 23%, 22%)",
+                    color: "white",
+                  }}
+                >
+                  <em style={{ color: "white" }}>{item}</em>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
+      <p className="text-red-800">{search}</p>
+      {/* <p className="text-red-800">{regions}</p> */}
+      <div className="bg-[#202C37] flex justify-center overflow-y-auto xl:max-w-[1440px] mx-auto flex flex-wrap justify-around">
+        <Box className="bg-[#202C37] mt-12 pl-[10px] fixed flex justify-center overflow-y-auto xl:max-w-[1440px] h-[2000px] mx-auto flex flex-wrap justify-around">
+          {posts &&
+            posts
+              .filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item.name.common.toLowerCase().includes(search);
+              })
+              .map((post, id) => (
+                <Link key={id} to={`/allcountry/${post.name.common}`}>
+                  <Box
+                    sx={{
+                      margin: "10px",
+                      marginBottom: "70px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+                    }}
+                  >
+                    <Card
+                      sx={{
+                        width: 280,
+                        height: 330,
+                        background: "hsl(209, 23%, 22%)",
+                      }}
+                    >
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={post.flags.png}
+                          alt="green iguana"
+                          sx={{ height: "150px" }}
+                        />
+                        <CardContent>
+                          <Typography
+                            sx={{
+                              textAlign: "left",
+                              color: "hsl(0, 0%, 100%)",
+                            }}
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                          >
+                            {/* country name */}
+                            {post.name.common}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              textAlign: "left",
+                              color: "hsl(0, 0%, 100%)",
+                              lineHeight: "24px",
+                            }}
+                            variant="body2"
+                            color="text.secondary"
+                          >
+                            {/* population, region, capital */}
+                            Population:{post.population}
+                            <br />
+                            Region:{post.region}
+                            <br />
+                            Capital:{post.capital}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Box>
+                </Link>
+              ))}
+        </Box>
+      </div>
+    </Box>
   );
 }
-
-// import { Grid, Typography } from "@mui/material";
-// import axios from "axios";
-// import React, { useEffect, useState } from "react";
-// // import { Link } from "react-router-dom";
-// import { useParams } from 'react-router-dom';
-
-// // const baseURL = "https://restcountries.com/v3.1/all";
-
-// const Dashboard = () => {
-//   const {id} = useParams()
-
-//   // const [posts, setPosts] = useState();
-//   // const {data} = await APIRequest.get(`/users/${id}`)
-
-//   // useEffect(() => {
-//   //   axios.get(`baseURL/users/${id}`).then((response) => {
-//   //     setPosts(response.data);
-//   //   });
-//   // }, []);
-//   return (
-//     <div>
-//       <h3>Dashboard dynamic route</h3>
-//       {/* {posts &&
-//         posts.map((post, id) => ( */}
-//             <Grid key={id} container spacing={2}>
-//               <Grid item>
-//                 <Typography>{id}</Typography>
-//               </Grid>
-//               <Grid item>
-//                 <Typography>{id}</Typography>
-//               </Grid>
-//               <Grid item>
-//                 <Typography>{id}</Typography>
-//               </Grid>
-//               <Grid item>
-//                 <img src="https://goo.gl/maps/bbGBCxxtfD2A9Z4m6" alt="google map" />
-//               </Grid>
-//             </Grid>
-//         {/* ))} */}
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
