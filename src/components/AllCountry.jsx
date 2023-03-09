@@ -12,7 +12,6 @@ import Select from "@mui/material/Select";
 
 export default function AllCountry() {
   const baseURL = "https://restcountries.com/v3.1/all";
-
   const [posts, setPosts] = useState();
   const [search, setSearch] = useState("");
   const [regions, setRegions] = useState("");
@@ -106,7 +105,9 @@ export default function AllCountry() {
                   : item.name.common.toLowerCase().includes(search);
               })
               .map((post, id) => (
-                <Link key={id} to={`/allcountry/${post.name.common}`}>
+                // <Link key={id} to={`/allcountry/${post.name.common}`}>
+                <Link key={id} to={`/${post.name.common}`}>
+
                   <Box
                     sx={{
                       margin: "10px",
