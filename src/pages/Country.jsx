@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 
 const Country = () => {
   const { id } = useParams();
@@ -28,10 +28,8 @@ const Country = () => {
           <KeyboardBackspace /> Back
         </div>
       </Link>
-
       <Box
         sx={{
-        
           marginRight: "20px",
           marginLeft: "20px",
         }}
@@ -43,19 +41,30 @@ const Country = () => {
                 <img src={post.flags.png} alt="google map" />
               </Grid>
               <Grid item>
-                <Typography sx={{fontWeight:"800"}}>{post.name.common}</Typography>
-                {/* <Typography>
+                <Typography sx={{ fontWeight: "800" }}>
+                  {post.name.common}
+                </Typography>
+                <Typography component="div" className="sm:flex">
+                  <Typography
+                    component="div"
+                    sx={{ marginBottom: "18px", marginRight:"50px" }}
+                  >
+                    {/* <Typography>
                   Native Name: {post.name.nativeName.nld.common}
                 </Typography> */}
-                <Typography>Population: {post.population}</Typography>
-                <Typography>Region: {post.region}</Typography>
-                <Typography>Sub Region: {post.subregion}</Typography>
-                <Typography>Capital: {post.capital}</Typography>
-                <Typography>Top Level Domain: {post.tld}</Typography>
-                {/* <Typography>Currencies: {post.currencies.EUR.name}</Typography> */}
-                <Typography>
-                  Languages: {post.languages.nld}, {post.languages.fra},
-                  {post.languages.deu}
+                    <Typography>Population: {post.population}</Typography>
+                    <Typography>Region: {post.region}</Typography>
+                    <Typography>Sub Region: {post.subregion}</Typography>
+                    <Typography>Capital: {post.capital}</Typography>
+                  </Typography>
+                  <Typography component="div">
+                    <Typography>Top Level Domain: {post.tld}</Typography>
+                    {/* <Typography>Currencies: {post.currencies.EUR.name}</Typography> */}
+                    <Typography>
+                      Languages: {post.languages.nld}, {post.languages.fra},
+                      {post.languages.deu}
+                    </Typography>
+                  </Typography>
                 </Typography>
                 <Typography>Border Countries:</Typography>
                 <Button>{post.border}</Button>

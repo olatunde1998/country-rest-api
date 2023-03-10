@@ -4,8 +4,7 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
 
 
 
@@ -17,25 +16,21 @@ function NavBar() {
       <AppBar component="nav">
         <Toolbar>
           <Typography
-            variant="h6"
+            variant="body"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "block", sm: "block" } }}
+            sx={{ flexGrow: 1}}
           >
            Where in the World?
           </Typography>
-          <Box sx={{ display: { xs: "block", sm: "block" } }}>
-            {/* {navItems.map((item) => ( */}
-            <Button sx={{ color: "#fff" }}>
-              {/* {item} */}
-              Home
-            </Button>
-            <Link to="#">
-              <Button sx={{ color: "#fff" }}>
-                {/* {item} */}
-                country
-              </Button>
-            </Link>
-            {/* ))} */}
+          <Box sx={{display: "flex"}}>
+          <NightlightRoundIcon sx={{marginRight:"10px"}}/>
+            <Typography
+            variant="body"
+            component="div"
+            sx={{ flexGrow: 1}}
+          >
+           Dark Mode
+          </Typography>
           </Box>
         </Toolbar>
       </AppBar>
