@@ -9,6 +9,8 @@ import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import SearchIcon from '@mui/icons-material/Search';
+
 
 export default function AllCountry() {
   const baseURL = "https://restcountries.com/v3.1/all";
@@ -17,6 +19,7 @@ export default function AllCountry() {
   const [regions, setRegions] = useState("");
 
   const regionData = ["Africa", "America", "Asia", "Europe", "Oceania"];
+
 
   useEffect(() => {
     axios.get(baseURL).then((response) => {
@@ -31,7 +34,7 @@ export default function AllCountry() {
   const handleRegions = (e) => {
     setRegions(e.target.value);
   };
-  console.log(regions);
+  // console.log(regions);
 
   return (
     <Box
@@ -43,28 +46,29 @@ export default function AllCountry() {
       }}
     >
       <div className="text-[#FFFFFF] text-3xl">Countries</div>
-      <Box className="sm:flex justify-between mt-[70px] xl:max-w-[1440px] mx-auto flex flex-wrap justify-between">
+      <Box className="sm:flex justify-between mt-[70px] items-center xl:max-w-[1440px] mx-auto flex flex-wrap justify-between">
         <Typography
           component="div"
           sx={{
             marginLeft: "10px",
           }}
-          className="w-[250px] h-full lg:w-[400px] h-[70px]"
+          className="bg-[#2B3945] pl-2 flex items-center justify-center w-[250px] h-full lg:w-[400px] h-[70px] mb-[0px]"
         >
+          <SearchIcon sx={{color:"white"}}/>
           <input
             type="text"
             onChange={handleSearch}
-            placeholder="Search your country"
-            className="w-full h-full"
+            placeholder="Search your country..."
+            className="w-full h-full p-4 bg-[#2B3945] text-white"
           />
         </Typography>
         <Box
           sx={{
             marginLeft: "10px",
           }}
-          className="border-2 border-gray-500 w-[150px] mt-[30px] lg:w-[200px] mr-[10px] h-[70px] mt-[0px]"
+          className="w-[150px]  lg:w-[200px] mr-[10px] h-[70px] mt-[0px]"
         >
-          <FormControl sx={{ width: "90%", m: 1 }}>
+          <FormControl sx={{ width: "90%", m: 1, background:"#2B3945" }}>
             <Select
               value={regions}
               onChange={handleRegions}
@@ -93,7 +97,7 @@ export default function AllCountry() {
           </FormControl>
         </Box>
       </Box>
-      <p className="text-red-800">{search}</p>
+      {/* <p className="text-red-800">{search}</p> */}
       {/* <p className="text-red-800">{regions}</p> */}
       <div className="bg-[#202C37] flex justify-center overflow-y-auto xl:max-w-[1440px] mx-auto flex flex-wrap justify-around">
         <Box className="bg-[#202C37] mt-12 pl-[10px] fixed flex justify-center overflow-y-auto xl:max-w-[1440px] h-[2000px] mx-auto flex flex-wrap justify-around">
