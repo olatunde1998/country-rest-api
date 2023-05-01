@@ -16,7 +16,7 @@ export default function AllCountry() {
   const baseURL = "https://restcountries.com/v3.1/all";
   const [posts, setPosts] = useState();
   const [search, setSearch] = useState("");
-  const [regions, setRegions] = useState("");
+  const [sortRegionValue, setSortRegionValue] = useState("");
 
   const regionData = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
@@ -31,8 +31,18 @@ export default function AllCountry() {
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
-  const handleRegions = (e) => {
-    setRegions(e.target.value);
+ 
+
+  const handleSortSearching = async (e) => {
+    let value = e.target.value;
+    setSortRegionValue(value)
+    return await axios
+      .get(`https://restcountries.com/v3.1/region/${value}`)
+      .then((response) => {
+        setPosts(response.data);
+       
+      })
+      .catch((err) => console.log(err));
   };
   // console.log(regions);
 
@@ -70,8 +80,9 @@ export default function AllCountry() {
         >
           <FormControl sx={{ width: "90%", m: 1, background:"#2B3945" }}>
             <Select
-              value={regions}
-              onChange={handleRegions}
+              // value={regions}
+              // onChange={handleRegions}
+              onChange={handleSortSearching} value={sortRegionValue}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
